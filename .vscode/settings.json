@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "rust-lang.rust-analyzer",
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.formatOnSaveMode": "file",
+  "rust-analyzer.linkedProjects": [
+    ".\\Cargo.toml",
+    ".\\Cargo.toml",
+    ".\\Cargo.toml"
+  ],
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "rust-analyzer.imports.granularity.enforce": true,
+  "rust-analyzer.imports.granularity.group": "item"
+}
