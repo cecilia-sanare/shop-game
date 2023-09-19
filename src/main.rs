@@ -20,10 +20,20 @@ const HEIGHT: i16 = 1440;
 
 const WINDOW_PERCENTAGE: i16 = 2;
 
+#[derive(Debug, Clone, Copy, Default, Eq, PartialEq, Hash, States)]
+pub enum AppState {
+    MainMenu,
+    #[default]
+    InGame,
+    Paused,
+}
+
 fn main() {
-    App::new()
-        .insert_resource(ClearColor(Color::hex("5fcde4").unwrap()))
+    let mut app = App::new();
+
+    app.insert_resource(ClearColor(Color::hex("5fcde4").unwrap()))
         .insert_resource(Msaa::Off)
+        .add_state::<AppState>()
         .add_plugins(
             DefaultPlugins
                 .set(AssetPlugin {
@@ -60,8 +70,15 @@ fn main() {
             GameUIPlugin,
             WorldPlugin,
         ))
-        .add_systems(Startup, spawn_camera)
-        .run();
+        .add_systems(Startup, spawn_camera);
+
+    // this code is compiled only if debug assertions are enabled (debug mode)
+    #[cfg(debug_assertions)]
+    use bevy::window::close_on_esc;
+    #[cfg(debug_assertions)]
+    app.add_systems(Update, close_on_esc);
+
+    app.run();
 }
 
 fn spawn_camera(mut commands: Commands) {

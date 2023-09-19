@@ -13,7 +13,6 @@ pub enum Layers {
     WORLD,
     BACKGROUND,
     DECOR,
-    ENTITIES,
 }
 
 impl Into<f32> for Layers {
