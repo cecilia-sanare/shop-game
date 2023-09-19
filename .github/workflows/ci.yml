@@ -8,7 +8,10 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +29,7 @@ jobs:
           components: rustfmt
       - name: Install alsa and udev
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev
+        if: runner.os == 'linux'
       - name: Lint
         run: cargo check
       - name: Build
@@ -33,5 +37,5 @@ jobs:
       - name: Upload Build
         uses: actions/upload-artifact@v3
         with:
-            name: Build
-            path: target/release
+            name: Build - ${{ runner.os }}
+            path: target/release/shop-game
