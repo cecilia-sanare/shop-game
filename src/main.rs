@@ -1,3 +1,4 @@
+#![windows_subsystem = "windows"]
 use std::time::Duration;
 
 use bevy::asset::ChangeWatcher;
@@ -7,6 +8,7 @@ use bevy::render::camera::ScalingMode;
 use bevy::render::render_resource::AddressMode;
 use bevy::render::render_resource::SamplerDescriptor;
 use bevy::render::texture::ImageSampler;
+use bevy_embedded_assets::EmbeddedAssetPlugin;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use ui::GameUIPlugin;
 use world::WorldPlugin;
@@ -63,7 +65,8 @@ fn main() {
                     }),
                     ..default()
                 })
-                .build(),
+                .build()
+                .add_before::<AssetPlugin, _>(EmbeddedAssetPlugin),
         )
         .add_plugins((
             WorldInspectorPlugin::default().run_if(input_toggle_active(false, KeyCode::Grave)),

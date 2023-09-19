@@ -29,4 +29,9 @@ jobs:
       - name: Lint
         run: cargo check
       - name: Build
-        run: cargo build -r
+        run: cargo build -r --no-default-features
+      - name: Upload Build
+        uses: actions/upload-artifact@v3
+        with:
+            name: Build
+            path: target/release
